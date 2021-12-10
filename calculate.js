@@ -1,50 +1,57 @@
 function userNumber(promptText) {
   let result = prompt(`Введите ${promptText}`);
   if (!isNaN(result) && result !== '') {
-    return parseInt(result);
+    return parseFloat(result);
   } else {
-    return parseInt(userNumber('число'));
+    alert(`это не число ${result} \nпример: 1 или 10  `);
+    return parseFloat(userNumber('повторно  значение'));
   }
 }
-
-function getMathSymbol() {
-  let result = prompt(
-    `Введите символ математической операции ' + ' ' - ' ' * ' ' / ' `
-  );
+function getMathSymbol(mathSymbol) {
+  let result = prompt(`Введите ${mathSymbol}`);
   if (result === '+' || result === '-' || result === '*' || result === '/') {
     return result;
+  } else if (result === null) {
+    return;
   } else {
-    alert(`такого символа нет "${result}" \nПовторите ввод`);
-    return getMathSymbol();
+    alert(`Ошибка это не символ ${result}`);
+    return getMathSymbol('повторно математический символ');
   }
 }
 function calculate(firstNumber, secondNumber, mathSymbol) {
-  let resCalculate = 0;
+  let resultCalculate = 0;
   switch (mathSymbol) {
     case '+':
-      resCalculate = firstNumber + secondNumber;
+      resultCalculate = firstNumber + secondNumber;
       break;
     case '-':
-      resCalculate = firstNumber - secondNumber;
+      resultCalculate = firstNumber - secondNumber;
       break;
     case '*':
-      resCalculate = firstNumber * secondNumber;
+      resultCalculate = firstNumber * secondNumber;
       break;
     case '/':
-      resCalculate = firstNumber / secondNumber;
+      resultCalculate = firstNumber / secondNumber;
       break;
     default:
-      return null;
+      alert('Упс...что-то пошло не так');
   }
-  return resCalculate;
+  if (
+    resultCalculate === NaN ||
+    resultCalculate === null ||
+    resultCalculate === ''
+  ) {
+    alert('Вычисление не успешно');
+  } else if (resultCalculate) {
+    alert('Результат вычисления: ' + resultCalculate);
+  }
 }
-
 function main() {
   let firstNumber = userNumber('первое значение');
-  let secondNumber = userNumber('второе значение');
-  let mathSymbol = getMathSymbol();
-  let calculateResult = calculate(firstNumber, secondNumber, mathSymbol);
-  alert('Результат вычисление:  ' + calculateResult);
+  let secondNumber = userNumber('Второе значение');
+  let mathSymbol = getMathSymbol(
+    "символ математической операции \nдопустимые символы: ' + ' ' - ' ' * ' ' / '"
+  );
+  let fullCalculate = calculate(firstNumber, secondNumber, mathSymbol);
 }
-
 main();
